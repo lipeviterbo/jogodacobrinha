@@ -1,18 +1,43 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import { getDatabase, ref, set, push} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBgvWBDEnhAipsdfMKwAZEctpR4MZLRSJE",
+  authDomain: "jogodacobrinha-bc090.firebaseapp.com",
+  databaseURL: "https://jogodacobrinha-bc090-default-rtdb.firebaseio.com",
+  projectId: "jogodacobrinha-bc090",
+  storageBucket: "jogodacobrinha-bc090.appspot.com",
+  messagingSenderId: "223152594478",
+  appId: "1:223152594478:web:8e1128fbc8596e533f49bf"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
 const h1 = document.querySelector('h1');//seleciona o primeiro elemento cuja a tag é h1
 const canvas = document.querySelector('canvas');//seleciona o primeiro elemento cuja a tag é canvas
 canvas.width = canvas.height =600;
 const ctx = canvas.getContext("2d")
+const audio = new Audio("./assets/audio.mp3");
 
-// para lembrar como se desenha um retângulo na tela (x, y, width, heigth)
-// ctx.fillStyle = "red"
-// ctx.fillRect(300,300, 50,50)
+const score = document.querySelector(".score--value");
+const finalScore = document.querySelector(".final-score > span");
+const menu = document.querySelector(".menu-screen");
+const buttonPlay = document.querySelector(".btn-play")
+
 const quantidadeDequadradinhosNaHorizontalEVertical = 20;
 const size = canvas.width/quantidadeDequadradinhosNaHorizontalEVertical; //tamanho padrão de cada quadradinho
 
-const snake = [
-    {x:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size, y:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size},
-    {x:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size+size, y:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size}
-]//array que gera a cobrinha
+const initialPosition = {x:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size, y:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size};
+let snake = [initialPosition]//array que gera a cobrinha
+
+const incrementScore = ()=>{
+    score.innerHTML = +score.innerHTML+10; // o + na frente do score.innerHTML converte o texto e número, serio o mesmo que fazer parseInt(score.innerHTML)
+}
 
 const numeroAleatorio = (minimo, maximo)=>{
     return Math.round(Math.random()*(maximo-minimo)+minimo);
@@ -93,7 +118,7 @@ const moveSnake = ()=>{         // função responsável por mover a cobrinha
 const drawGrid = ()=>{
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#191919"
-
+    let i = size;
     for(i=size; i<canvas.width; i=i+size){ 
         // linhas verticais (o x varia e o y fica fixo)
         ctx.beginPath();//vai ser apontar para o início de um novo caminho (ou seja, de uma nova linha)
@@ -111,15 +136,90 @@ const drawGrid = ()=>{
    
 }
 
-const delayDojogo = 300; // delay que influencia na velocidade do jogo
+const checkEat=()=>{
+    const head = snake.at(-1);  // põe o último elemento do array "snake" na variável "head"
+
+    if(head.x==food.x && head.y ==food.y){//checa se as coordenadas da cabeça da cobra (head) coincidem com as coordenadas da comida
+        snake.push(head);// isere mais um novo elemento no array snake (com as coordenadas da comida)
+        incrementScore();
+        audio.play();
+        // a partir de agora iremos gerar uma nova posição da comida
+        let x= randomPosition();
+        let y= randomPosition();
+        
+        while(snake.find((elemento)=>elemento.x==x&&elemento.y==y)){//verifica se as novas coordenadas para a comida coincide com alguma das coordenadas do corpo da cobrinha
+            x= randomPosition();
+            y= randomPosition();
+        }//fica no loop até que seja criada uma comida fora do corpo da cobrinha
+        food.x = x;
+        food.y = y;
+        food.color= arrayDeCores[numeroAleatorio (0,arrayDeCores.length-1)] ;        
+    }
+}
+
+const checkCollision = ()=>{
+    const head = snake.at(-1);  // põe o último elemento do array "snake" na variável "head"
+    const limiteHorizontal = canvas.width-size;
+    const limiteVertical = canvas.height-size;
+
+    const wallCollision = head.x < 0||head.x>limiteHorizontal||head.y<0||head.y>limiteVertical
+
+    const selfCollision = snake.find((elemento, index)=>{
+        return (elemento.x == head.x && elemento.y == head.y && index<snake.length-2);// verifica se há colisão da cabeça da cobra com outra parte do corpo diferente da cabeça
+    });
+
+    if(wallCollision||selfCollision){
+        gameOver();
+    }
+    // if(wallCollision) alert("Perdeu! Você bateu a cabeça no muro.");
+    // if(selfCollision) alert("Perdeu! Você bateu a cabeça no corpo")
+}
+
+const inserirPontosNoFirebase=()=>{
+    const database = getDatabase();
+    const scoresRef = ref(database, 'pontos'); // 'pontos' é o nome da sua coleção de pontuações
+
+    // Recupera a pontuação final do jogo
+    const finalScoreValue = parseInt(finalScore.innerText);
+
+    const momentoAtual = Date.now();
+    const dataDoMomentoAtual = new Date(momentoAtual);
+    // Adiciona a pontuação ao banco de dados usando push para criar um novo item
+    const newScoreRef = push(scoresRef);
+    set(newScoreRef, {
+        timestamp: momentoAtual, // Adicione um timestamp opcional para ordenar as pontuações
+        score: finalScoreValue,
+        dataEhora: dataDoMomentoAtual.toString()
+    });
+    
+}
+
+let finalizado = false;// esta variável serve para que o gameOver seja executado somente uma vez a cada partida
+const gameOver = () => {
+    if(finalizado) return;
+    direction = undefined
+    finalScore.innerText = score.innerText;
+
+    menu.style.display = "flex"; // faz o menu de game over aparecer
+    
+    canvas.style.filter = "blur(2px)"; // põe um embaçado na imagem de fundo do jogo
+    inserirPontosNoFirebase();
+    finalizado = true;
+}
+
+
+const delayDojogo = 400; // delay que influencia na velocidade do jogo
 const gameLoop=()=>{ // função que gera o loop principal do jogo
     
     clearInterval(loopId)// para o loop cujo o IDs foi informado no argumento pela variável loopId
     ctx.clearRect(0,0,canvas.width,canvas.height)//limpa o canvas (onde são desenhados os elementos do jogo)
+    
+    drawGrid();
     drawFood();
     moveSnake();
     drawSnake();
-    drawGrid();
+    checkEat();
+    checkCollision();
 
     loopId = setTimeout( ()=>{
         gameLoop();
@@ -136,3 +236,11 @@ document.addEventListener("keydown",({key})=>{ // já recebe a key do envento, o
     if(key=="ArrowUp"&&direction!="down") direction="up";
 });
 
+buttonPlay.addEventListener("click",()=>{
+    snake = [initialPosition];// reinicia a cobrinha
+    score.innerText = "00";//reinicia a pontuação do jogo (o score)
+    menu.style.display = "none";//oculta a tela de menu que aparece no game over
+    canvas.style.filter = "none"; //tira o embaçado que aparece no game over
+    finalizado = false;
+
+});
