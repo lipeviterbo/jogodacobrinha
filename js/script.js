@@ -9,10 +9,6 @@ import { getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebas
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBgvWBDEnhAipsdfMKwAZEctpR4MZLRSJE",
@@ -103,9 +99,10 @@ const drawSnake = ()=>{
 }
 
 let direction, loopId
+let finalizado = false;// esta variável serve para que o gameOver seja executado somente uma vez a cada partida
 const moveSnake = ()=>{         // função responsável por mover a cobrinha
     
-    if(!direction) return;      //caso não haja direção, não move
+    if(!direction||finalizado) return;      //caso não haja direção, não move
     
     const head = snake.at(-1);  // põe o último elemento do array "snake" na variável "head"
     snake.shift();              //remove o primeiro elemento do array (ou seja, tira o rabo da cobrinha)
@@ -219,7 +216,6 @@ const inserirPontosNoFirebase = () => {
 };
 
 
-let finalizado = false;// esta variável serve para que o gameOver seja executado somente uma vez a cada partida
 const gameOver = () => {
     if(finalizado) return;
     direction = undefined
@@ -229,7 +225,6 @@ const gameOver = () => {
     
     canvas.style.filter = "blur(2px)"; // põe um embaçado na imagem de fundo do jogo
     inserirPontosNoFirebase();
-    direction = undefined;//força para a cobrinha ficar parada
     finalizado = true;
 }
 
@@ -298,7 +293,7 @@ document.addEventListener("keydown",({key})=>{ // já recebe a key do envento, o
 });
 
 buttonPlay.addEventListener("click",()=>{
-    direction = undefined;//força para a cobrinha ficar parada
+    direction = undefined;//força para a cobrinha reiniciar o jogo sempre parada
     snake = [initialPosition];// reinicia a cobrinha
     score.innerText = "00";//reinicia a pontuação do jogo (o score)
     menu.style.display = "none";//oculta a tela de menu que aparece no game over
