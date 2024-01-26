@@ -1,6 +1,16 @@
 // Import the functions you need from the SDKs you need
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+//import { getDatabase, ref, set, push, get, orderByChild} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-import { getDatabase, ref, set, push} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+import { getDatabase, ref, set, push, get, orderByChild } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Restante do seu código...
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,7 +28,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const h1 = document.querySelector('h1');//seleciona o primeiro elemento cuja a tag é h1
+const h4 = document.querySelector('h4');//seleciona o primeiro elemento cuja a tag é h2
 const canvas = document.querySelector('canvas');//seleciona o primeiro elemento cuja a tag é canvas
 canvas.width = canvas.height =600;
 const ctx = canvas.getContext("2d")
@@ -207,13 +217,43 @@ const gameOver = () => {
     finalizado = true;
 }
 
+const getHighestScore = () => {
+    const database = getDatabase();
+    const scoresRef = ref(database, 'pontos');
 
+    // Obtenha todos os registros
+    get(scoresRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            const scores = snapshot.val();
+
+            // Converta o objeto de pontuações em um array de objetos
+            const scoresArray = Object.keys(scores).map((key) => ({
+                key: key,
+                score: scores[key].score
+            }));
+
+            // Ordena o array de pontuações em ordem decrescente
+            scoresArray.sort((a, b) => b.score - a.score);
+
+            // Obtenha a maior pontuação
+            const highestScore = scoresArray.length > 0 ? scoresArray[0].score : 0;
+            //console.log(highestScore);
+            h4.innerHTML = "record: "+highestScore;
+            
+        }
+    }).catch((error) => {
+        console.error('Erro ao obter a pontuação mais alta:', error);
+    });
+};
+
+
+// Chame a função para obter a pontuação mais alta quando o jogo for iniciado
+getHighestScore();//obtem o valor do record atual do jogo
 const delayDojogo = 400; // delay que influencia na velocidade do jogo
 const gameLoop=()=>{ // função que gera o loop principal do jogo
     
     clearInterval(loopId)// para o loop cujo o IDs foi informado no argumento pela variável loopId
     ctx.clearRect(0,0,canvas.width,canvas.height)//limpa o canvas (onde são desenhados os elementos do jogo)
-    
     drawGrid();
     drawFood();
     moveSnake();
@@ -241,6 +281,7 @@ buttonPlay.addEventListener("click",()=>{
     score.innerText = "00";//reinicia a pontuação do jogo (o score)
     menu.style.display = "none";//oculta a tela de menu que aparece no game over
     canvas.style.filter = "none"; //tira o embaçado que aparece no game over
+    getHighestScore();//obtem o valor do record atual do jogo
     finalizado = false;
 
 });

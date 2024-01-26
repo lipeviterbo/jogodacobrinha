@@ -10,9 +10,11 @@
     
     <title>Snake Game</title>
 </head>
-<body>
-    <div class="score">score: <span class="score--value">00</span></div>
 
+<body>
+<table>
+    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"><h4></h4></div></td></tr>
+</table>
     <div class="menu-screen">
         <span class="game-over">game over</span>
         <span class="final-score">score <span>00</span></span>
@@ -25,6 +27,7 @@
     </div>
 
     <canvas width="600" height="600"></canvas>
+
     <script src="./js/script.js" type="module"></script>
 </body>
 </html>
