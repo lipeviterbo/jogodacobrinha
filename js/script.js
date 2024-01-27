@@ -1,12 +1,5 @@
-// Import the functions you need from the SDKs you need
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-//import { getDatabase, ref, set, push, get, orderByChild} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 
 // Your web app's Firebase configuration
@@ -19,14 +12,14 @@ const firebaseConfig = {
   messagingSenderId: "223152594478",
   appId: "1:223152594478:web:8e1128fbc8596e533f49bf"
 };
-
+ 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 let valorDoRecord = 0;
 const record = document.querySelector('.record');
-const canvas = document.querySelector('canvas');//seleciona o primeiro elemento cuja a tag é canvas
-canvas.width = canvas.height =600;
+const canvas = document.querySelector('.canvas_jogo');//seleciona o objeto canvas onde se faz os desenhos do jogo (palco do jogo)
+canvas.width = canvas.height =500;
 const ctx = canvas.getContext("2d")
 const audio = new Audio("./assets/audio.mp3");
 
@@ -98,27 +91,49 @@ const drawSnake = ()=>{
     });
 }
 
-let direction, loopId
+let direction, direcaoAnterior, loopId
+direcaoAnterior = "";
 let finalizado = false;// esta variável serve para que o gameOver seja executado somente uma vez a cada partida
 const moveSnake = ()=>{         // função responsável por mover a cobrinha
     
-    if(!direction||finalizado) return;      //caso não haja direção, não move
+    direction = label;
+    if(!direction||finalizado||(direction=="sem_comando"&&direcaoAnterior == "")) return;      //caso não haja direção, não move
     
     const head = snake.at(-1);  // põe o último elemento do array "snake" na variável "head"
     snake.shift();              //remove o primeiro elemento do array (ou seja, tira o rabo da cobrinha)
     
+    //console.log("direcao atual: "+direction +" direcao anterior: "+direcaoAnterior) //para debug
+    if(direction=="sem_comando"){
+        direction = direcaoAnterior;
+    }
     
-    if(direction=="right"){
-        snake.push({x:head.x+size, y:head.y});               // insere um novo elemento no array, ou seja, põe a nova cabeça
+    if(direction=="direita"&&direcaoAnterior != "esquerda"){    //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x+size, y:head.y});                  // insere um novo elemento no array, ou seja, põe a nova cabeça
+        direcaoAnterior = direction;
     }
-    if(direction=="left"){
-        snake.push({x:head.x-size, y:head.y});               // insere um novo elemento no array, ou seja, põe a nova cabeça
+    if(direction=="direita"&&direcaoAnterior == "esquerda"){    //caso a cobra receba a direção contrária, ela continua indo de onde ela já vinha
+        snake.push({x:head.x-size, y:head.y});                  // continua indo no sentido para esquerda sem alterar a variável direcaoAnterior
     }
-    if(direction=="down"){
-        snake.push({x:head.x, y:head.y+size});               // insere um novo elemento no array, ou seja, põe a nova cabeça
+    if(direction=="esquerda"&&direcaoAnterior != "direita"){    //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x-size, y:head.y});                  // insere um novo elemento no array, ou seja, põe a nova cabeça
+        direcaoAnterior = direction;
     }
-    if(direction=="up"){
-        snake.push({x:head.x, y:head.y-size});               // insere um novo elemento no array, ou seja, põe a nova cabeça
+    if(direction=="esquerda"&&direcaoAnterior == "direita"){    //caso a cobra receba a direção contrária, ela continua indo de onde ela já vinha
+        snake.push({x:head.x+size, y:head.y});                  // continua indo no sentido para direita sem alterar a variável direcaoAnterior
+    }
+    if(direction=="tras"&&direcaoAnterior != "frente"){         //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x, y:head.y+size});                  // insere um novo elemento no array, ou seja, põe a nova cabeça
+        direcaoAnterior = direction;
+    }
+    if(direction=="tras"&&direcaoAnterior == "frente"){         //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x, y:head.y-size});                  // continua indo no sentido para frente sem alterar a variável direcaoAnterior
+    }
+    if(direction=="frente"&&direcaoAnterior != "tras"){         //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x, y:head.y-size});                  // insere um novo elemento no array, ou seja, põe a nova cabeça
+        direcaoAnterior = direction;
+    }
+    if(direction=="frente"&&direcaoAnterior == "tras"){         //impede da cobra ir diretamente pra direção contrária
+        snake.push({x:head.x, y:head.y+size});                  // continua indo no sentido para tras sem alterar a variável direcaoAnterior
     }
 }
 
@@ -265,9 +280,11 @@ const getRecorde = async () => {
 getRecorde(); // atualiza o valor do recorde
 
 
-const delayDojogo = 250; // delay que influencia na velocidade do jogo
+const delayDojogo = 400; // delay que influencia na velocidade do jogo
 const gameLoop=()=>{ // função que gera o loop principal do jogo
     
+    //console.log(label);
+
     clearInterval(loopId)// para o loop cujo o IDs foi informado no argumento pela variável loopId
     ctx.clearRect(0,0,canvas.width,canvas.height)//limpa o canvas (onde são desenhados os elementos do jogo)
     drawGrid();
@@ -299,6 +316,8 @@ buttonPlay.addEventListener("click",()=>{
     menu.style.display = "none";//oculta a tela de menu que aparece no game over
     canvas.style.filter = "none"; //tira o embaçado que aparece no game over
     getRecorde();
+    direcaoAnterior = "";
     finalizado = false;
 
 });
+
