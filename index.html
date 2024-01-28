@@ -11,7 +11,7 @@
 </head>
 <body>  
 <table>
-    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td></tr>
+    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button id="btNovoModelo">Atualizar Comandos</button></div></td></tr>
 
     <div class="menu-screen">
         <span class="game-over">game over</span>
@@ -33,7 +33,13 @@
     
     let classifier;
     // Model URL
-    let imageModelURL = 'https://teachablemachine.withgoogle.com/models/jFY9xmx5X/';
+
+    //link fernanda https://teachablemachine.withgoogle.com/models/hq3Z_PeG0/
+    // direita e esquerda com o respectivo braço todo levantado: https://teachablemachine.withgoogle.com/models/YIKZcTsGC/
+    // cireita e esquerda com sua respectiva seta e/ou continência: https://teachablemachine.withgoogle.com/models/6rAM0fnsL/
+    // direções com seta desenhada no papel: https://teachablemachine.withgoogle.com/models/BhkiAmkVa/
+    let imageModelURL = 'https://teachablemachine.withgoogle.com/models/BhkiAmkVa/';
+
     
     // Video
     let video;
@@ -45,7 +51,15 @@
     function preload() {
       classifier = ml5.imageClassifier(imageModelURL + 'model.json');
     }
-  
+    
+    const botaoNovoModelo = document.getElementById("btNovoModelo");
+    botaoNovoModelo.addEventListener("click", ()=>{
+      let novaImageModelURL = prompt("Insira aqui a URL do novo modelo:")
+      imageModelURL = novaImageModelURL;
+      preload();
+      console.log("A nova URL será: "+imageModelURL)
+    });
+
     function setup() {
       createCanvas(120, 90);
       // Create the video

@@ -97,8 +97,13 @@ let finalizado = false;// esta variável serve para que o gameOver seja executad
 const moveSnake = ()=>{         // função responsável por mover a cobrinha
     
     direction = label;
+    let comando_invalido =  direction!="esquerda"&&direction!="direita"&&direction!="frente"&&direction!="tras"&&direction!="sem_comando";
     if(!direction||finalizado||(direction=="sem_comando"&&direcaoAnterior == "")) return;      //caso não haja direção, não move
-    
+    if(comando_invalido){
+        alert("A URL dos seus novos comandos é inválida ou possui algum comando fora do padrão!");
+        window.location.reload(true);
+        return;
+    }
     const head = snake.at(-1);  // põe o último elemento do array "snake" na variável "head"
     snake.shift();              //remove o primeiro elemento do array (ou seja, tira o rabo da cobrinha)
     
