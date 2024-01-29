@@ -11,7 +11,7 @@
 </head>
 <body>  
 <table>
-    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button id="btincio">Início</button></div></td></tr>
+    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button onclick="window.location.href='index.html'">Início</button></div></td></tr>
 
     <div class="menu-screen">
         <span class="game-over">game over</span>
@@ -29,6 +29,15 @@
 <script src="https://cdn.jsdelivr.net/npm/p5@latest/lib/addons/p5.dom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
 <script type="text/javascript">
+
+// const btincio = document.getElementById("btincio");
+//     btincio.addEventListener("click", ()=>{
+//       window.location.href = 'index.html'
+//       // let novaImageModelURL = prompt("Insira aqui a URL do novo modelo:")
+//       // imageModelURL = novaImageModelURL;
+//       // preload();
+//       // console.log("A nova URL será: "+imageModelURL)
+//     });
 //este aqui é o script da webCam
     
     let classifier;
@@ -51,15 +60,6 @@
     function preload() {
       classifier = ml5.imageClassifier(imageModelURL + 'model.json');
     }
-    
-    const btincio = document.getElementById("btincio");
-    btincio.addEventListener("click", ()=>{
-      window.location.href = 'index.html'
-      // let novaImageModelURL = prompt("Insira aqui a URL do novo modelo:")
-      // imageModelURL = novaImageModelURL;
-      // preload();
-      // console.log("A nova URL será: "+imageModelURL)
-    });
 
     function setup() {
       createCanvas(120, 90);
