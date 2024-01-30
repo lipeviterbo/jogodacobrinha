@@ -198,8 +198,6 @@ const checkCollision = ()=>{
     if(wallCollision||selfCollision){
         gameOver();
     }
-    // if(wallCollision) alert("Perdeu! Você bateu a cabeça no muro.");
-    // if(selfCollision) alert("Perdeu! Você bateu a cabeça no corpo")
 }
 
 const inserirPontosNoFirebase = () => {
@@ -212,22 +210,23 @@ const inserirPontosNoFirebase = () => {
     const momentoAtual = Date.now();
     const dataDoMomentoAtual = new Date(momentoAtual);
 
-    const newScoreRef = push(scoresRef);
-    set(newScoreRef, {
-        timestamp: momentoAtual,
-        score: finalScoreValue,
-        dataEhora: dataDoMomentoAtual.toString()
-    });
+    function poeNoFirebase(campo,apelido, momento, pontuacao, data){
+        set(campo, {
+            apelido: apelido,
+            timestamp: momento,
+            score: pontuacao,
+            dataEhora: data
+        });
+    }
 
+    const newScoreRef = push(scoresRef);
+    poeNoFirebase(newScoreRef, apelidoDoJogador, momentoAtual, finalScoreValue, dataDoMomentoAtual.toString());
+    
     // Atualiza o recorde se o novo score for maior
     
         if (finalScoreValue > valorDoRecord) {
             const newRecordeRef = push(recordeRef);
-            set(newRecordeRef, {
-                timestamp: momentoAtual,
-                score: finalScoreValue,
-                dataEhora: dataDoMomentoAtual.toString()
-            });
+            poeNoFirebase(newRecordeRef, apelidoDoJogador, momentoAtual, finalScoreValue, dataDoMomentoAtual.toString());
             console.log("Recorde Atualizado!")
         }
         else{
@@ -270,9 +269,10 @@ const getRecorde = async () => {
 
     if (ultimoRecorde) {
       const recordeScore = ultimoRecorde.score;
+      const recordeApelido = ultimoRecorde.apelido;
       valorDoRecord = recordeScore;
-      //console.log("Recorde:", valorDoRecord);
-      record.innerHTML = "Record: "+ valorDoRecord;
+      console.log("o recordista é: "+recordeApelido);//para debug
+      record.innerHTML = "Recordista:<br>"+ recordeApelido+"<br>"+ valorDoRecord+" pontos";
     } else {
       console.log("Sem recorde encontrado.");
     }
@@ -288,7 +288,7 @@ getRecorde(); // atualiza o valor do recorde
 const delayDojogo = 400; // delay que influencia na velocidade do jogo
 const gameLoop=()=>{ // função que gera o loop principal do jogo
     
-    //console.log(label);
+    //console.log(apelidoDoJogador);
 
     clearInterval(loopId)// para o loop cujo o IDs foi informado no argumento pela variável loopId
     ctx.clearRect(0,0,canvas.width,canvas.height)//limpa o canvas (onde são desenhados os elementos do jogo)
@@ -304,6 +304,7 @@ const gameLoop=()=>{ // função que gera o loop principal do jogo
     },delayDojogo);// chama a própria função a cada vez que se passar 300 milisegundos
 }
 
+
 gameLoop();
 
 document.addEventListener("keydown",({key})=>{ // já recebe a key do envento, ou seja, já recebe a tecla do evento
@@ -315,6 +316,7 @@ document.addEventListener("keydown",({key})=>{ // já recebe a key do envento, o
 });
 
 buttonPlay.addEventListener("click",()=>{
+    
     direction = undefined;//força para a cobrinha reiniciar o jogo sempre parada
     snake = [initialPosition];// reinicia a cobrinha
     score.innerText = "00";//reinicia a pontuação do jogo (o score)

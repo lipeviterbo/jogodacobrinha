@@ -1,0 +1,108 @@
+{
+  "pontos": {
+    "-NpQLYewYV8Q9E1LCF72": {
+      "apelido": "testezim",
+      "dataEhora": "Tue Jan 30 2024 14:10:52 GMT-0300 (GMT-03:00)",
+      "score": 30,
+      "timestamp": 1706634652192
+    },
+    "-NpQMEcUjGXHUo3M0waI": {
+      "apelido": "testezim2",
+      "dataEhora": "Tue Jan 30 2024 14:13:52 GMT-0300 (GMT-03:00)",
+      "score": 20,
+      "timestamp": 1706634832276
+    },
+    "-NpQMfj1BWI1DpUEztBE": {
+      "apelido": "testezim2",
+      "dataEhora": "Tue Jan 30 2024 14:15:47 GMT-0300 (GMT-03:00)",
+      "score": 10,
+      "timestamp": 1706634947383
+    },
+    "-NpQNhuru6jXGx1RCL4c": {
+      "apelido": "testezim3",
+      "dataEhora": "Tue Jan 30 2024 14:20:18 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706635218476
+    },
+    "-NpQNn2hUnsFBrueMUrz": {
+      "apelido": "testezim3",
+      "dataEhora": "Tue Jan 30 2024 14:20:39 GMT-0300 (GMT-03:00)",
+      "score": 10,
+      "timestamp": 1706635239522
+    },
+    "-NpQPtkAN0BXbMmwbdEH": {
+      "apelido": "felipezim4",
+      "dataEhora": "Tue Jan 30 2024 14:29:51 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706635791220
+    },
+    "-NpQPyLN1p6IxVP9ZSm1": {
+      "apelido": "felipezim4",
+      "dataEhora": "Tue Jan 30 2024 14:30:10 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706635810050
+    },
+    "-NpQVH0nvroHTs98h-tR": {
+      "apelido": "testezim8",
+      "dataEhora": "Tue Jan 30 2024 14:53:21 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706637201382
+    },
+    "-NpQVNmG5lZXEDZZdAn4": {
+      "apelido": "testezim8",
+      "dataEhora": "Tue Jan 30 2024 14:53:49 GMT-0300 (GMT-03:00)",
+      "score": 10,
+      "timestamp": 1706637229060
+    },
+    "-NpQVROrvUMng2iMXRK5": {
+      "apelido": "testezim8",
+      "dataEhora": "Tue Jan 30 2024 14:54:03 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706637243883
+    },
+    "-NpQVk7TKtvfLl-LyfVd": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 14:55:24 GMT-0300 (GMT-03:00)",
+      "score": 40,
+      "timestamp": 1706637324698
+    },
+    "-NpQVu9p9aq7E89wNwwg": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 14:56:05 GMT-0300 (GMT-03:00)",
+      "score": 10,
+      "timestamp": 1706637365810
+    },
+    "-NpQWcLN0NNQhwsGd-wF": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 14:59:15 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706637555029
+    },
+    "-NpQWtTONkwTcXNa0Eup": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 15:00:25 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706637625124
+    },
+    "-NpQXWcVbrlzeufE8UbM": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 15:03:09 GMT-0300 (GMT-03:00)",
+      "score": 0,
+      "timestamp": 1706637789592
+    }
+  },
+  "recorde": {
+    "-NpQLYewYV8Q9E1LCF72": {
+      "apelido": "testezim",
+      "dataEhora": "Tue Jan 30 2024 14:10:52 GMT-0300 (GMT-03:00)",
+      "score": 30,
+      "timestamp": 1706634652192
+    },
+    "-NpQVk7frNW4ekdfT93c": {
+      "apelido": "testezim9",
+      "dataEhora": "Tue Jan 30 2024 14:55:24 GMT-0300 (GMT-03:00)",
+      "score": 40,
+      "timestamp": 1706637324698
+    }
+  }
+}

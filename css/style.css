@@ -35,6 +35,7 @@ body {
     margin-top: -10px;
 }
 
+
 .menu-screen {
     position: absolute;
     display: none;
@@ -67,4 +68,11 @@ body {
     justify-content: center;
     gap: 5px;
     cursor: pointer;
+}
+.record{
+    font-size: 12px;
+    align-items: center;
+    align-self: center;
+    vertical-align:middle;
+    align-content: center;
 }
