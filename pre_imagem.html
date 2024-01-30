@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Envio</title>
+    <style>
+        body {
+            background-color: #2b2b2b;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            background-color: #444;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input {
+            width: 50%; 
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #avisoVazio {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="apelido">Apelido</h1>
+    <p>Deseja enviar uma URL com seus comandos personalizados?</p>
+    <button onclick="mostrarCampoTexto()">Sim</button>
+    <button onclick="redirecionarComPadrao()">Não</button>
+
+    <div id="campoTexto" style="display: none;">
+        <label for="texto">Digite aqui sua URL:</label><br>
+        <input type="text" id="texto" name="texto" required><br>
+        <span id="avisoVazio"></span><br>
+        <button onclick="enviarTexto()">Enviar</button>
+    </div>
+
+    <script>
+        let url_do_modelo;
+        function obterParametroURL(texto) {
+            var urlSearchParams = new URLSearchParams(window.location.search);
+            return urlSearchParams.get(texto);
+        }
+
+        var apelidoRecebido = obterParametroURL('apelido');
+        apelidoRecebido = apelidoRecebido || 'sem apelido';
+        document.getElementById("apelido").innerHTML=apelidoRecebido;
+
+
+        function mostrarCampoTexto() {
+            document.getElementById('campoTexto').style.display = 'block';
+        }
+
+        function redirecionarComPadrao() {
+            url_do_modelo = 'urldefault';
+            //console.log('imagem.html?texto='+url_do_modelo+'&apelido='+apelidoRecebido);
+            window.location.href = 'imagem.html?texto='+url_do_modelo+'&apelido='+apelidoRecebido;
+        }
+
+        function enviarTexto() {
+            var textoDigitado = document.getElementById('texto').value;
+            var avisoVazio = document.getElementById('avisoVazio');
+
+            if (textoDigitado.trim() === "") {
+                avisoVazio.innerText = "Por favor, preencha o campo.";
+            } else {
+                avisoVazio.innerText = "";
+                url_do_modelo = encodeURIComponent(textoDigitado);
+                console.log('imagem.html?texto='+url_do_modelo+'&apelido='+apelidoRecebido);
+                window.location.href = 'imagem.html?texto='+url_do_modelo+'&apelido='+apelidoRecebido;
+            }
+        }
+    </script>
+</body>
+</html>

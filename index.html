@@ -42,15 +42,45 @@
       background-color: #555555;
       color: #ffffff;
     }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    #avisoapelido {
+      color: red;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Como você deseja realizar o controle?</h1>
-    <a href="imagem.html" class="btn">Imagem</a>
-    <a href="pose.html" class="btn">Pose</a>
+    <h1>Informe seu apelido:</h1>
+    <input type="text" id="apelidoJogador" placeholder="Digite seu apelido" required>
+    <br>
+    <span id="avisoapelido"></span>
+    <br>
+    <a class="btn" onclick="verificarapelido('imagem')">Imagem</a>
+    <a class="btn" onclick="verificarapelido('pose')">Pose</a>
   </div>
+
+  <script>
+    function verificarapelido(controleEscolhido) {
+      var apelidoJogador = document.getElementById('apelidoJogador').value;
+      var avisoapelido = document.getElementById('avisoapelido');
+
+      if (apelidoJogador.trim() === "") {
+        avisoapelido.innerText = "Por favor, digite seu apelido.";
+      } else {
+        avisoapelido.innerText = "";
+        // Redireciona para a página correspondente com o apelido do jogador
+        window.location.href = controleEscolhido === 'imagem' ? 'pre_imagem.html?apelido=' + encodeURIComponent(apelidoJogador) : 'pre_pose.html?apelido=' + encodeURIComponent(apelidoJogador);
+      }
+    }
+  </script>
 
 </body>
 </html>

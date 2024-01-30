@@ -11,7 +11,7 @@
 </head>
 <body>  
 <table>
-    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button onclick="window.location.href='index.html'">Início</button></div></td></tr>
+    <tr><td id="apelido">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button onclick="window.location.href='index.html'">Início</button></div></td></tr>
 
     <div class="menu-screen">
         <span class="game-over">game over</span>
@@ -30,26 +30,33 @@
 <script src="https://cdn.jsdelivr.net/npm/ml5@latest/dist/ml5.min.js"></script>
 <script type="text/javascript">
 
-// const btincio = document.getElementById("btincio");
-//     btincio.addEventListener("click", ()=>{
-//       window.location.href = 'index.html'
-//       // let novaImageModelURL = prompt("Insira aqui a URL do novo modelo:")
-//       // imageModelURL = novaImageModelURL;
-//       // preload();
-//       // console.log("A nova URL será: "+imageModelURL)
-//     });
-//este aqui é o script da webCam
-    
-    let classifier;
-    // Model URL
+  
+  //este aqui é o script da webCam
+  // esta parte aqui é para ver se o usuário enviou uma URL de treinamento (por imagem) persoalizada
+  function obterParametroURL(nome) {
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      return urlSearchParams.get(nome);
+  }
 
-    //link fernanda https://teachablemachine.withgoogle.com/models/hq3Z_PeG0/
-    // direita e esquerda com o respectivo braço todo levantado: https://teachablemachine.withgoogle.com/models/YIKZcTsGC/
-    // cireita e esquerda com sua respectiva seta e/ou continência: https://teachablemachine.withgoogle.com/models/6rAM0fnsL/
-    // direções com seta desenhada no papel: https://teachablemachine.withgoogle.com/models/BhkiAmkVa/
-    let imageModelURL = 'https://teachablemachine.withgoogle.com/models/BhkiAmkVa/';
+  
+  var apelidoDoJogador = obterParametroURL('apelido');
+  apelidoDoJogador = apelidoDoJogador || 'sem apelido';
+  document.getElementById("apelido").innerHTML= apelidoDoJogador+document.getElementById("apelido").innerHTML;
+  
+  var urlRecebida = obterParametroURL('texto');
+  urlRecebida = urlRecebida || 'urldefault';
 
-    
+  // Model URL
+  let imageModelURL;
+  if(!urlRecebida|| urlRecebida== 'urldefault'){
+    imageModelURL = 'https://teachablemachine.withgoogle.com/models/BhkiAmkVa/';
+  }
+  else{
+    imageModelURL = urlRecebida;
+  }
+
+  let classifier;
+      
     // Video
     let video;
     let flippedVideo;
