@@ -1,0 +1,4 @@
+ //link fernanda https://teachablemachine.withgoogle.com/models/hq3Z_PeG0/
+    // direita e esquerda com o respectivo braço todo levantado: https://teachablemachine.withgoogle.com/models/YIKZcTsGC/
+    // cireita e esquerda com sua respectiva seta e/ou continência: https://teachablemachine.withgoogle.com/models/6rAM0fnsL/
+    // direções com seta desenhada no papel: https://teachablemachine.withgoogle.com/models/BhkiAmkVa/
