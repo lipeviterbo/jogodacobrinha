@@ -10,8 +10,8 @@
     <title>Jogo da Cobrinha</title>
 </head>
 <body>   
-<table>
-    <tr><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button onclick="window.location.href='index.html'">Início</button></div></td></tr>
+<table> 
+    <tr><td id="apelido">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="score">score: <span class="score--value">00</span> </div><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div class="record"></div></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><div><button onclick="window.location.href='index.html'">Início</button></div></td></tr>
 
     <div class="menu-screen">
         <span class="game-over">game over</span>
@@ -35,13 +35,33 @@
 <script type="text/javascript">
 
 
-  //script da webcam
+    //script da webcam
+    // esta parte aqui é para ver se o usuário enviou uma URL de treinamento (por imagem) persoalizada
+  function obterParametroURL(nome) {
+      var urlSearchParams = new URLSearchParams(window.location.search);
+      return urlSearchParams.get(nome);
+  }
 
+  
+  var apelidoDoJogador = obterParametroURL('apelido');
+  apelidoDoJogador = apelidoDoJogador || 'sem apelido';
+  document.getElementById("apelido").innerHTML= apelidoDoJogador+document.getElementById("apelido").innerHTML;
+  
+  var urlRecebida = obterParametroURL('texto');
+  urlRecebida = urlRecebida || 'urldefault';
+
+  // Model URL
+  let URL;
+  if(!urlRecebida|| urlRecebida== 'urldefault'){
+    URL = "https://teachablemachine.withgoogle.com/models/34SZIKLeN/";
+  }
+  else{
+    URL = urlRecebida;
+  }
   // More API functions here:
   // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
   // the link to your model provided by Teachable Machine export panel
-  const URL = "https://teachablemachine.withgoogle.com/models/34SZIKLeN/";
   let model, webcam, ctx, labelContainer, maxPredictions, label, pontuacao_atual;
 
     async function init() {
