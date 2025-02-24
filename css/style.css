@@ -15,7 +15,14 @@ body {
     justify-content: center;
     flex-direction: column;
     color: white;
+    background-image: url('../assets/imagem_de_fundo_manna.png'); /* Substitua pelo caminho real da sua imagem */
+    background-size: cover; /* Faz a imagem cobrir toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Impede a repetição da imagem */
+    height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
+    margin: 0;
 }
+
 
 .canvas_jogo {
     background-color: #111;
