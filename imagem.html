@@ -120,10 +120,11 @@
 
     // Get a prediction for the current video frame
     function classifyVideo() {
-      flippedVideo = ml5.flipImage(video)
-      classifier.classify(flippedVideo, gotResult);
-      flippedVideo.remove();
-  
+      //  flippedVideo = ml5.flipImage(video)
+      //  classifier.classify(flippedVideo, gotResult);
+      //  flippedVideo.remove();
+    classifier.classify(video, gotResult); // Usa o vídeo direto, não precisa mais de flippedVideo
+
     }
   
     // When we get a result
