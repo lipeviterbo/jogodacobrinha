@@ -184,7 +184,9 @@
           // Classifica novamente
           classifyVideo();
             // Envia o comando reconhecido para o script do jogo
-            window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: comandoReconhecido }));
+            //window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: comandoReconhecido }));
+            // Envia o comando reconhecido para o script do jogo
+            window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: label }));
 
         }
     //////////////////////////////////////////
