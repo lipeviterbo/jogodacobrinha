@@ -77,14 +77,15 @@
   
       // removido para debug// flippedVideo = ml5.flipImage(video);
         //as 3 próximas linhas foram inseridas para debug
-        flippedVideo = video.get();
-        flippedVideo.resize(120, 90);
-        flippedVideo.filter(FLIP, HORIZONTAL);
+        //flippedVideo = video.get();
+        //flippedVideo.resize(120, 90);
+        //flippedVideo.filter(FLIP, HORIZONTAL);
 
       // Start classifying
       classifyVideo();
     }
-  
+
+    /*
     function draw() {
       background(0);
       // Draw the video
@@ -96,7 +97,27 @@
       textAlign(CENTER);
       text(label, width / 2, height - 4);
     }
+      */
+    function draw() {
+  background(0);
   
+  // Espelha o vídeo horizontalmente
+  push(); // Salva o estado atual do desenho
+  translate(width, 0); // Move a origem para a direita
+  scale(-1, 1); // Espelha na horizontal
+
+  // Desenha o vídeo espelhado
+  image(video, 0, 0);
+
+  pop(); // Restaura o estado do desenho
+
+  // Desenha o label
+  fill(255);
+  textSize(16);
+  textAlign(CENTER);
+  text(label, width / 2, height - 4);
+}
+
     // Get a prediction for the current video frame
     function classifyVideo() {
       flippedVideo = ml5.flipImage(video)
