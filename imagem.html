@@ -97,7 +97,7 @@
       textAlign(CENTER);
       text(label, width / 2, height - 4);
     }
-      */
+      /////////////////// a próxima função draw é um debug
     function draw() {
   background(0);
   
@@ -117,6 +117,28 @@
   textAlign(CENTER);
   text(label, width / 2, height - 4);
 }
+*/
+    /////////////////////////////////
+    function draw() {
+          background(0);
+          
+          push(); // Salva o estado atual do desenho
+          translate(width, 0); // Move a origem para a direita
+          scale(-1, 1); // Espelha na horizontal
+        
+          image(video, 0, 0);
+          pop(); // Restaura o estado do desenho
+        
+          // Só mostra se label não estiver vazio
+          if (label) {
+            fill(255);
+            textSize(16);
+            textAlign(CENTER);
+            text(label, width / 2, height - 4);
+          }
+        }
+
+    //////////////////////////////////
 
     // Get a prediction for the current video frame
     function classifyVideo() {
