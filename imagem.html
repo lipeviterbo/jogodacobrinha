@@ -66,6 +66,8 @@
     // Load the model first
     function preload() {
       classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+        console.log("Model URL:", imageModelURL);
+
     }
 
     function setup() {
@@ -150,7 +152,7 @@
     }
 
     
-    // When we get a result
+    /*/ When we get a result
     function gotResult(error, results) {
       // If there is an error
       if (error) {
@@ -164,7 +166,25 @@
       // Classifiy again!
       classifyVideo();
     }
+    *///////////////////////////////////////
+    function gotResult(error, results) {
+      if (error) {
+        console.error(error);
+        //return;
+      }
     
+      // Verifica se há resultados e se results[0] existe
+      if (results && results[0]) {
+        label = results[0].label;
+        console.log(label); // Debug
+      } else {
+        console.log("Nenhum resultado recebido");
+      }
+    
+      // Classifica novamente
+      classifyVideo();
+    }
+
     /*///////////////////////////////////////////
     // When we get a result
         function gotResult(error, results) {
