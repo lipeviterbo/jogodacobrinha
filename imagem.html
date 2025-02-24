@@ -75,7 +75,12 @@
       video.size(120, 90);
       video.hide();
   
-      flippedVideo = ml5.flipImage(video);
+      // removido para debug// flippedVideo = ml5.flipImage(video);
+        //as 3 próximas linhas foram inseridas para debug
+        flippedVideo = video.get();
+        flippedVideo.resize(120, 90);
+        flippedVideo.filter(FLIP, HORIZONTAL);
+
       // Start classifying
       classifyVideo();
     }
