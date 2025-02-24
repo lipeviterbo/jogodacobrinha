@@ -149,7 +149,7 @@
 
     }
 
-    /*
+    
     // When we get a result
     function gotResult(error, results) {
       // If there is an error
@@ -160,11 +160,12 @@
       // The results are in an array ordered by confidence.
       // console.log(results[0]);
       label = results[0].label;
+        console.log(label); //debug
       // Classifiy again!
       classifyVideo();
     }
-    */
-    ////////////////////////////////////////////
+    
+    /*///////////////////////////////////////////
     // When we get a result
         function gotResult(error, results) {
           if (error) {
@@ -189,7 +190,7 @@
             window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: label }));
 
         }
-    //////////////////////////////////////////
+    *//////////////////////////////////////////
     
     
   </script>
