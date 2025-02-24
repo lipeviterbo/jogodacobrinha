@@ -126,7 +126,8 @@
     classifier.classify(video, gotResult); // Usa o vídeo direto, não precisa mais de flippedVideo
 
     }
-  
+
+    /*
     // When we get a result
     function gotResult(error, results) {
       // If there is an error
@@ -140,7 +141,28 @@
       // Classifiy again!
       classifyVideo();
     }
-
+    */
+    ////////////////////////////////////////////
+    // When we get a result
+        function gotResult(error, results) {
+          if (error) {
+            console.error(error);
+            return;
+          }
+        
+          console.log(results); // Pra ver o array completo, pode tirar depois se quiser
+        
+          // Pega o label com maior confiança
+          let comandoReconhecido = results[0].label;
+          label = comandoReconhecido;
+        
+          // Opcional: Mostra também a confiança no console
+          console.log(`Comando: ${comandoReconhecido} | Confiança: ${results[0].confidence.toFixed(2)}`);
+        
+          // Classifica novamente
+          classifyVideo();
+        }
+    //////////////////////////////////////////
     
     
   </script>
