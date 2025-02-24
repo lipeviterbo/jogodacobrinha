@@ -1,7 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
+////
+window.addEventListener('comandoReconhecido', function(event) {
+    const comando = event.detail;
+    console.log('Comando recebido:', comando);
+    direction = comando; // Atualiza a direção com o comando reconhecido
+});
 
+
+/////
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBgvWBDEnhAipsdfMKwAZEctpR4MZLRSJE",
