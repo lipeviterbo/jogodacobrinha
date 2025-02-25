@@ -337,7 +337,7 @@ buttonPlay.addEventListener("click",()=>{
     
     direction = undefined;//força para a cobrinha reiniciar o jogo sempre parada
     snake = [initialPosition];// reinicia a cobrinha
-    score.innerText = "00";//reinicia a pontuação do jogo (o score)
+    score.innerText = "0";//reinicia a pontuação do jogo (o score)
     menu.style.display = "none";//oculta a tela de menu que aparece no game over
     canvas.style.filter = "none"; //tira o embaçado que aparece no game over
     getRecorde();
