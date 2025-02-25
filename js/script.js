@@ -42,10 +42,17 @@ const incrementScore = ()=>{
     const currentScore = parseInt(score.innerHTML) || 0;
     score.innerHTML = currentScore + 10;
 }
-*/
+
 const incrementScore = ()=>{
     score.innerHTML = parseInt(score.innerHTML) || 0;
     score.innerHTML = +score.innerHTML + 10;
+    console.log(score.innerHTML);
+}
+*/
+
+const incrementScore = ()=>{
+    const currentScore = parseInt(score.innerHTML, 10) || 0;
+    score.innerHTML = currentScore + 10;
     console.log(score.innerHTML);
 }
 
