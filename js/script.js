@@ -33,9 +33,14 @@ const size = canvas.width/quantidadeDequadradinhosNaHorizontalEVertical; //taman
 
 const initialPosition = {x:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size, y:Math.floor(quantidadeDequadradinhosNaHorizontalEVertical/2)*size};
 let snake = [initialPosition]//array que gera a cobrinha
-
+/*
 const incrementScore = ()=>{
     score.innerHTML = +score.innerHTML+10; // o + na frente do score.innerHTML converte o texto e número, serio o mesmo que fazer parseInt(score.innerHTML)
+}
+*/
+const incrementScore = ()=>{
+    const currentScore = parseInt(score.innerHTML) || 0;
+    score.innerHTML = currentScore + 10;
 }
 
 const numeroAleatorio = (minimo, maximo)=>{
