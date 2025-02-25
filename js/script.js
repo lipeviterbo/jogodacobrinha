@@ -36,32 +36,10 @@ let snake = [initialPosition]//array que gera a cobrinha
 
 
 const incrementScore = ()=>{
-    //score.innerHTML = +score.innerHTML+10; // o + na frente do score.innerHTML converte o texto e número, serio o mesmo que fazer parseInt(score.innerHTML)
     score.innerText = parseInt(score.innerText)+10;
-    console.log(score.innerText);
-    console.log(parseInt(score.innerText));
-    console.log(10);
-    console.log("10");
-}
-/*
-const incrementScore = ()=>{
-    const currentScore = parseInt(score.innerHTML) || 0;
-    score.innerHTML = currentScore + 10;
+    
 }
 
-const incrementScore = ()=>{
-    score.innerHTML = parseInt(score.innerHTML) || 0;
-    score.innerHTML = +score.innerHTML + 10;
-    console.log(score.innerHTML);
-}
-
-
-const incrementScore = ()=>{
-    const currentScore = parseInt(score.innerHTML, 10) || 0;
-    score.innerHTML = currentScore + 10;
-    console.log(score.innerHTML);
-}
-*/
 const numeroAleatorio = (minimo, maximo)=>{
     return Math.round(Math.random()*(maximo-minimo)+minimo);
 }
@@ -78,10 +56,7 @@ const randomColor = ()=>{
     return `rgb(${red}, ${green}, ${blue})`
 }
 
-//para debug
-// const corRGB_sorteada = randomColor();
-// h1.style.color = corRGB_sorteada;
-// h1.innerHTML=corRGB_sorteada;
+
 
 const arrayDeCores = ["PowderBlue","Thistle","Lavender","PaleGoldenrod","PeachPuff","Yellow","Gold","Orange","Red","Tomato","Brown","DarkRed","Maroon","DeepPink","Purple","Indigo","GreenYellow","Chartreuse","Green","MediumSpringGreen","Aquamarine","Turquoise","SteelBlue","Blue","DeepSkyBlue","DarkSlateBlue"];
 
@@ -343,7 +318,7 @@ buttonPlay.addEventListener("click",()=>{
     
     direction = undefined;//força para a cobrinha reiniciar o jogo sempre parada
     snake = [initialPosition];// reinicia a cobrinha
-    score.innerText = "0";//reinicia a pontuação do jogo (o score)
+    score.innerText = "00";//reinicia a pontuação do jogo (o score)
     menu.style.display = "none";//oculta a tela de menu que aparece no game over
     canvas.style.filter = "none"; //tira o embaçado que aparece no game over
     getRecorde();
