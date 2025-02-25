@@ -37,10 +37,16 @@ let snake = [initialPosition]//array que gera a cobrinha
 const incrementScore = ()=>{
     score.innerHTML = +score.innerHTML+10; // o + na frente do score.innerHTML converte o texto e número, serio o mesmo que fazer parseInt(score.innerHTML)
 }
-*/
+
 const incrementScore = ()=>{
     const currentScore = parseInt(score.innerHTML) || 0;
     score.innerHTML = currentScore + 10;
+}
+*/
+const incrementScore = ()=>{
+    score.innerHTML = parseInt(score.innerHTML) || 0;
+    score.innerHTML = +score.innerHTML + 10;
+    console.log(score.innerHTML);
 }
 
 const numeroAleatorio = (minimo, maximo)=>{
