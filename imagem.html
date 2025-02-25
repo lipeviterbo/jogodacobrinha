@@ -66,8 +66,6 @@
     // Load the model first
     function preload() {
       classifier = ml5.imageClassifier(imageModelURL + 'model.json');
-        console.log("Model URL:", imageModelURL);
-
     }
 
     function setup() {
@@ -77,17 +75,11 @@
       video.size(120, 90);
       video.hide();
   
-      // removido para debug// flippedVideo = ml5.flipImage(video);
-        //as 3 próximas linhas foram inseridas para debug
-        //flippedVideo = video.get();
-        //flippedVideo.resize(120, 90);
-        //flippedVideo.filter(FLIP, HORIZONTAL);
-
+      flippedVideo = ml5.flipImage(video);
       // Start classifying
       classifyVideo();
     }
-
-    /*
+  
     function draw() {
       background(0);
       // Draw the video
@@ -99,120 +91,29 @@
       textAlign(CENTER);
       text(label, width / 2, height - 4);
     }
-      /////////////////// a próxima função draw é um debug
-    function draw() {
-  background(0);
   
-  // Espelha o vídeo horizontalmente
-  push(); // Salva o estado atual do desenho
-  translate(width, 0); // Move a origem para a direita
-  scale(-1, 1); // Espelha na horizontal
-
-  // Desenha o vídeo espelhado
-  image(video, 0, 0);
-
-  pop(); // Restaura o estado do desenho
-
-  // Desenha o label
-  fill(255);
-  textSize(16);
-  textAlign(CENTER);
-  text(label, width / 2, height - 4);
-}
-*/
-    /////////////////////////////////
-    function draw() {
-          background(0);
-          
-          push(); // Salva o estado atual do desenho
-          translate(width, 0); // Move a origem para a direita
-          scale(-1, 1); // Espelha na horizontal
-        
-          image(video, 0, 0);
-          pop(); // Restaura o estado do desenho
-        
-          // Só mostra se label não estiver vazio
-          if (label) {
-            fill(255);
-            textSize(16);
-            textAlign(CENTER);
-            text(label, width / 2, height - 4);
-          }
-        }
-
-    //////////////////////////////////
-
     // Get a prediction for the current video frame
     function classifyVideo() {
-      //  flippedVideo = ml5.flipImage(video)
-      //  classifier.classify(flippedVideo, gotResult);
-      //  flippedVideo.remove();
-    classifier.classify(video, gotResult); // Usa o vídeo direto, não precisa mais de flippedVideo
-
+      flippedVideo = ml5.flipImage(video)
+      classifier.classify(flippedVideo, gotResult);
+      flippedVideo.remove();
+  
     }
-
-    
-    /*/ When we get a result
+  
+    // When we get a result
     function gotResult(error, results) {
       // If there is an error
       if (error) {
         console.error(error);
-        //return;
+        return;
       }
       // The results are in an array ordered by confidence.
       // console.log(results[0]);
       label = results[0].label;
-        console.log(label); //debug
       // Classifiy again!
       classifyVideo();
     }
-    *///////////////////////////////////////
-   
-    function gotResult(error, results) {
-      /*
-        if (error) {
-        console.error(error);
-        return;
-      }*/
-    
-      // Verifica se há resultados e se results[0] existe
-      if (results && results[0]) {
-        label = results[0].label;
-        console.log(label); // Debug
-      } else {
-        console.log("Nenhum resultado recebido");
-      }
-    
-      // Classifica novamente
-      classifyVideo();
-    }
 
-    /*///////////////////////////////////////////
-    // When we get a result
-        function gotResult(error, results) {
-          if (error) {
-            console.error(error);
-            return;
-          }
-        
-          console.log(results); // Pra ver o array completo, pode tirar depois se quiser
-        
-          // Pega o label com maior confiança
-          let comandoReconhecido = results[0].label;
-          label = comandoReconhecido;
-        
-          // Opcional: Mostra também a confiança no console
-          console.log(`Comando: ${comandoReconhecido} | Confiança: ${results[0].confidence.toFixed(2)}`);
-        
-          // Classifica novamente
-          classifyVideo();
-            // Envia o comando reconhecido para o script do jogo
-            //window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: comandoReconhecido }));
-            // Envia o comando reconhecido para o script do jogo
-            window.dispatchEvent(new CustomEvent('comandoReconhecido', { detail: label }));
-
-        }
-    *//////////////////////////////////////////
     
     
   </script>
