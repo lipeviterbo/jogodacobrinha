@@ -1,9 +1,8 @@
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-//import { getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+import { getDatabase, ref, set, push, get} from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
 
 
 // Your web app's Firebase configuration
-/*
 const firebaseConfig = {
   apiKey: "AIzaSyBgvWBDEnhAipsdfMKwAZEctpR4MZLRSJE",
   authDomain: "jogodacobrinha-bc090.firebaseapp.com",
@@ -16,7 +15,7 @@ const firebaseConfig = {
  
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-*/
+
 let valorDoRecord = 0;
 const record = document.querySelector('.record');
 const canvas = document.querySelector('.canvas_jogo');//seleciona o objeto canvas onde se faz os desenhos do jogo (palco do jogo)
@@ -200,7 +199,7 @@ const checkCollision = ()=>{
         gameOver();
     }
 }
-/*
+
 const inserirPontosNoFirebase = () => {
     const database = getDatabase();
     const scoresRef = ref(database, 'pontos');
@@ -235,7 +234,7 @@ const inserirPontosNoFirebase = () => {
         }
 };
 
-*/
+
 const gameOver = () => {
     if(finalizado) return;
     direction = undefined
@@ -244,7 +243,7 @@ const gameOver = () => {
     menu.style.display = "flex"; // faz o menu de game over aparecer
     
     canvas.style.filter = "blur(2px)"; // põe um embaçado na imagem de fundo do jogo
-    //inserirPontosNoFirebase();
+    inserirPontosNoFirebase();
     finalizado = true;
 }
 
